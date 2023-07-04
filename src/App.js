@@ -70,7 +70,7 @@ function Scene({ isPaused = false }) {
 
       <Physics gravity={[0, 0, 0]} isPaused={isPaused}>
         <Debug color="black" scale={1}>
-          <Ground color="grey" position={[0, -0.5, 0]} rotation={[-Math.PI / 2, 0, 0]} />
+          {/* <Ground color="grey" position={[0, -0.5, 0]} rotation={[-Math.PI / 2, 0, 0]} /> */}
 
           <Crate position={[1, 0, 0]} color="hotpink"/>
           <Crate position={[0, 0, 0]} color="hotpink"/>
@@ -207,6 +207,13 @@ export default function App() {
         >
           {isPaused ? 'RESUME' : 'PAUSE'}
         </button>
+      </div>
+      <div style={{position:'fixed',bottom:"0",left:"40%"}}>
+      <button
+          style={{ fontSize: '20px', margin: '20px', padding: '8px' }}
+      >
+        Click on the Blue Boxes to move them
+      </button>
       </div>
 
       <Canvas camera={{ fov: 50, position: [2, 10, 7] }}>
