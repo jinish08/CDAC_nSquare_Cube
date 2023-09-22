@@ -244,7 +244,7 @@ const ThreePyramid = () => {
     return (
         <div style={{ height: '100vh', width: '100%' }}>
             <div style={{ position: 'fixed', textAlign: 'center', width: '100%', zIndex: +1 }}>
-                Hello
+                {/* Hello */}
             </div>
             <div style={{ position: 'fixed', bottom: "0", left: "40%" }}>
             </div>

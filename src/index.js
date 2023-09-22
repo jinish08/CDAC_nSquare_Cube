@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import ThreePyramid from './pages/ThreePyramid';
+import AppNew from './pages/AppNew';
 import {
   createBrowserRouter,
   RouterProvider,
@@ -16,6 +17,10 @@ const router = createBrowserRouter([
   {
     path: "/three-pyramid",
     element: <ThreePyramid />,
+  },
+  {
+    path: "/app-new",
+    element: <AppNew />,
   }
 ]);
 
