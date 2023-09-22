@@ -238,8 +238,11 @@ const ThreePyramid = () => {
             <div style={{ position: 'fixed', textAlign: 'center', width: '100%', zIndex: +1 }}>
                 {/* Hello */}
             </div>
-            <div style={{ position: 'fixed', bottom: "0", left: "40%" }}>
-            </div>
+            <div style={{ position: 'fixed', top: 100, left: "15%", zIndex: 999 }}>
+                    <p style={{ fontSize: '35px', margin: '20px', padding: '8px', textAlign: 'right' }}>
+                        <span>3(1<sup>2</sup> + 2<sup>2</sup> + 3<sup>2</sup> + ... + n<sup>2</sup>)</span>
+                    </p>
+                </div>
 
             <div className='flex h-full' >
                 <Canvas camera={{ fov: 50, position: [2, 10, 17] }}>
@@ -251,6 +254,11 @@ const ThreePyramid = () => {
                 <Canvas camera={{ fov: 50, position: [2, 10, 17] }}>
                     <Scene isPaused={isPaused} color={"yellow"} />
                 </Canvas>
+                <div style={{ position: 'fixed', bottom: 100, right: "25%", zIndex: 999 }}>
+                    <p style={{ fontSize: '35px', margin: '20px', padding: '8px', textAlign: 'right' }}>
+                        Let's make 2 more copies of the same shape
+                    </p>
+                </div>
             </div>
         </div>
     )

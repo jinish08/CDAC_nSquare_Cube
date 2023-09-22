@@ -354,7 +354,7 @@ export default function AppNew() {
             return;
         }
         const nextIndex = (currentTextIndex + 1);
-        if (nextIndex !== 6) {
+        if (nextIndex !== 5) {
             setShowEquation(false);
             setShowEquation1(false);
             textDisplay.push(
@@ -366,17 +366,46 @@ export default function AppNew() {
             setCurrentTextIndex(nextIndex);
         }
     };
+    const handlePrevButtonClick = () => {
+        // The new text should add to the next line
+        // setDisplayText(displayText + "<br/>" + textList[nextIndex]);
+        if (currentTextIndex === 0) {
+            return;
+        }
+        const nextIndex = (currentTextIndex - 1);
+        if (nextIndex === 0) {
+            setShowEquation(false);
+            setShowEquation1(true);
+            setTextDisplay([
+                <p>length = n </p>,
+                <p>width = n + 1 </p>,
+                <p>height = n + 1/2 </p>
+            ]);
+            setCurrentTextIndex(nextIndex);
+            return;
+        }
+        if (nextIndex === 1) {
+            setShowEquation(true);
+            setShowEquation1(true);
+            setTextDisplay([]);
+            setCurrentTextIndex(nextIndex);
+            return;
+        }
+        textDisplay.pop();
+        setTextDisplay(textDisplay);
+        setCurrentTextIndex(nextIndex);
+    };
 
   return (
     <div style={{ height: '100vh', width: '100%' }}>
-      <div style={{ position: 'fixed', textAlign: 'center', width: '100%', zIndex: +1 }}>
+      {/* <div style={{ position: 'fixed', textAlign: 'center', width: '100%', zIndex: +1 }}>
         <button
           onClick={() => togglePaused((value) => !value)}
           style={{ fontSize: '20px', margin: '20px', padding: '8px' }}
         >
-          {isPaused ? 'RESUME' : 'PAUSE'}
+          {isPaused ? 'RESUME' : currentTextIndex}
         </button>
-      </div>
+      </div> */}
       <div style={{ position: 'fixed', top: 100, left: 50, zIndex: 999 }}>
         <p style={{ fontSize: '45px', margin: '20px', padding: '8px' }}>
             {showEquation1? <span>3(1<sup>2</sup> + 2<sup>2</sup> + 3<sup>2</sup> + ... + n<sup>2</sup>)</span> : <></>}{showEquation? <span>= n(n + 1)(n + 1 / 2)</span> : <></>
@@ -386,22 +415,6 @@ export default function AppNew() {
           <div style={{ position: 'fixed', top: 100, left: '45%', zIndex: 999 }}>
               { !showEquation1? <p>Explation Text</p>:<></>}
           </div>
-      <div style={{ position: 'fixed', top: 200, right: 30, zIndex: 999 }}>
-          <p style={{ fontSize: '35px', margin: '20px', padding: '8px', textAlign: 'right' }}>
-                  {/* {displayText} */}
-                  {textDisplay}
-          </p>
-      </div>
-      <div style={{ position: 'fixed', bottom: 100, right: 50, zIndex: 999 }} >
-          <button style={{
-              padding: '8px 16px',
-              border: '2px solid #000',
-              borderRadius: '4px',
-              background: 'none',
-              cursor: 'pointer',
-              fontSize: '16px',
-            }} onClick={handleButtonClick}>Next -&gt;</button>
-      </div>    
           
       {/* <div style={{position:'fixed',bottom:"0",left:"40%"}}> */}
       {/* <button
@@ -409,11 +422,40 @@ export default function AppNew() {
       >
         Click on the Blue Boxes to move them
       </button> */}
-      {/* </div> */}
-
-      <Canvas camera={{ fov: 80, position: [1, 20, 7] }}>
-        <Scene isPaused={isPaused} togglePaused={togglePaused}/>
-      </Canvas>
-    </div>
+          {/* </div> */}
+    <div className='flex h-full' >
+        <Canvas className='basis-2/3' camera={{ fov: 80, position: [0, 20, 7],  }}>
+            <Scene isPaused={isPaused} togglePaused={togglePaused}/>
+        </Canvas>
+        <div className="basis-1/3">
+            <div style={{ position: 'fixed', top: 200, right: 30, zIndex: 999 }}>
+                <p style={{ fontSize: '35px', margin: '20px', padding: '8px', textAlign: 'right' }}>
+                        {/* {displayText} */}
+                        {textDisplay}
+                </p>
+            </div>
+            <div style={{ position: 'fixed', bottom: 100, right: 50, zIndex: 999 }} >
+                <button style={{
+                    padding: '8px 16px',
+                    border: '2px solid #000',
+                    borderRadius: '4px',
+                    background: 'none',
+                    cursor: 'pointer',
+                    fontSize: '16px',
+                }} onClick={handleButtonClick}>Next -&gt;</button>
+                </div>  
+            <div style={{ position: 'fixed', bottom: 100, right: 200, zIndex: 999 }} >
+                <button style={{
+                    padding: '8px 16px',
+                    border: '2px solid #000',
+                    borderRadius: '4px',
+                    background: 'none',
+                    cursor: 'pointer',
+                    fontSize: '16px',
+                }} onClick={handlePrevButtonClick}>&lt;- Prev</button>
+                </div>  
+            </div>         
+        </div>
+      </div>
   )
 }
