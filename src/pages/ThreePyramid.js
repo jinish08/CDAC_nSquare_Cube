@@ -37,14 +37,6 @@ function HeightCrate(props) {
             ref={ref}
         >
             <meshStandardMaterial color={props.color} />
-            {/* <Html distanceFactor={10}>
-        <div class="line"></div>
-        <div class="content-h">
-        <p className='text-center'> 
-            N
-            </p>
-        </div>
-      </Html> */}
         </Box>
     )
 }

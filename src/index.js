@@ -4,6 +4,7 @@ import './index.css';
 import App from './App';
 import ThreePyramid from './pages/ThreePyramid';
 import AppNew from './pages/AppNew';
+import LandingPage from "./pages/LandingPage"
 import {
   createBrowserRouter,
   RouterProvider,
@@ -21,6 +22,10 @@ const router = createBrowserRouter([
   {
     path: "/app-new",
     element: <AppNew />,
+  },
+  {
+    path: "/landing-page",
+    element: <LandingPage />
   }
 ]);
 
