@@ -330,13 +330,21 @@ const { checkBoxTick,setCheckBoxTick } = useState(false);
 export default function AppNew() {
     const [isPaused, togglePaused] = useState(false);
     const textList = [
-        <p>3(1<sup>2</sup> + 2<sup>2</sup> + 3<sup>2</sup> + ... + n<sup>2</sup>) = n(n + 1)(n + 1/2)</p>,
-        <p>3(1<sup>2</sup> + 2<sup>2</sup> + 3<sup>2</sup> + ... + n<sup>2</sup>) = [n(n + 1)(2n + 1)]/2</p>,
+        <p>Volume of a cuboid = Length x Width x Height</p>,
+        <p>And as illustrated, the volume of this cuboid =<br/>3(1<sup>2</sup> + 2<sup>2</sup> + 3<sup>2</sup> + ... + n<sup>2</sup>)</p>,
+        <p>Given Height = (n + (1/2))</p>,
+        <p>Simplifying,</p>,
+        <p>Height = (2n+1)/2</p>,
+        <p>Now we know<br/>3(1<sup>2</sup> + 2<sup>2</sup> + 3<sup>2</sup> + ... + n<sup>2</sup>) = Length x Width x Height,</p>,
+        <p>Hence 3(1<sup>2</sup> + 2<sup>2</sup> + 3<sup>2</sup> + ... + n<sup>2</sup>) = n * (n + 1) * (2n + 1)/2</p>,
+        // <p>3(1<sup>2</sup> + 2<sup>2</sup> + 3<sup>2</sup> + ... + n<sup>2</sup>) = [n(n + 1)(2n + 1)]/2</p>,
+        <p>Dividing by 3 on both sides, We get</p>,
         <p>1<sup>2</sup> + 2<sup>2</sup> + 3<sup>2</sup> + ... + n<sup>2</sup> = [n(n + 1)(2n + 1)]/6</p>,
     ];
     const [currentTextIndex, setCurrentTextIndex] = useState(0);
     const [displayText, setDisplayText] = useState(textList[0]);
     const [textDisplay, setTextDisplay] = useState([
+        <p>Dimensions:</p>,
         <p>length = n </p>,
         <p>width = n + 1 </p>,
         <p>height = n + 1/2 </p>
@@ -347,19 +355,32 @@ export default function AppNew() {
     const handleButtonClick = () => {
         // The new text should add to the next line
         // setDisplayText(displayText + "<br/>" + textList[nextIndex]);
-        if (currentTextIndex === 0 && !showEquation) {
-            setTextDisplay([]);
-            setShowEquation(true);
-            setCurrentTextIndex(1);
-            return;
-        }
+        // if (currentTextIndex === 0 && !showEquation) {
+        //     setTextDisplay([]);
+        //     setShowEquation(true);
+        //     setCurrentTextIndex(1);
+        //     return;
+        // }
         const nextIndex = (currentTextIndex + 1);
-        if (nextIndex !== 5) {
-            setShowEquation(false);
-            setShowEquation1(false);
+        if (nextIndex !== 11) {
+            if (nextIndex === 1) {
+                textDisplay.pop();
+                textDisplay.pop();
+                textDisplay.pop();
+                textDisplay.pop();
+            }
+            // setShowEquation(false);
+            // setShowEquation1(false);
+            if (nextIndex === 6) {
+                // Clear the textDisplay.
+                setTextDisplay([]);
+                for(var i = 0; i < nextIndex+1; i++) {
+                    textDisplay.pop();
+                }
+            }
             textDisplay.push(
                 <>
-                    {textList[nextIndex-2]}
+                    {textList[nextIndex-1]}
                 </>
             );
             setTextDisplay(textDisplay);
@@ -374,9 +395,10 @@ export default function AppNew() {
         }
         const nextIndex = (currentTextIndex - 1);
         if (nextIndex === 0) {
-            setShowEquation(false);
-            setShowEquation1(true);
+            // setShowEquation(false);
+            // setShowEquation1(true);
             setTextDisplay([
+                <p>Dimensions:</p>,
                 <p>length = n </p>,
                 <p>width = n + 1 </p>,
                 <p>height = n + 1/2 </p>
@@ -384,10 +406,21 @@ export default function AppNew() {
             setCurrentTextIndex(nextIndex);
             return;
         }
-        if (nextIndex === 1) {
-            setShowEquation(true);
-            setShowEquation1(true);
-            setTextDisplay([]);
+        // if (nextIndex === 1) {
+        //     setShowEquation(true);
+        //     setShowEquation1(true);
+        //     setTextDisplay([]);
+        //     setCurrentTextIndex(nextIndex);
+        //     return;
+        // }
+        if (nextIndex === 5) {
+            setTextDisplay([
+                <p>Volume of a cuboid = Length x Width x Height</p>,
+                <p>And as illustrated, the volume of this cuboid =<br/>3(1<sup>2</sup> + 2<sup>2</sup> + 3<sup>2</sup> + ... + n<sup>2</sup>)</p>,
+                <p>Given Height = (n + (1/2))</p>,
+                <p>Simplifying,</p>,
+                <p>Height = (2n+1)/2</p>
+            ]);
             setCurrentTextIndex(nextIndex);
             return;
         }
@@ -398,22 +431,22 @@ export default function AppNew() {
 
   return (
     <div style={{ height: '100vh', width: '100%' }}>
-      {/* <div style={{ position: 'fixed', textAlign: 'center', width: '100%', zIndex: +1 }}>
+      <div style={{ position: 'fixed', textAlign: 'center', width: '100%', zIndex: +1 }}>
         <button
           onClick={() => togglePaused((value) => !value)}
           style={{ fontSize: '20px', margin: '20px', padding: '8px' }}
         >
           {isPaused ? 'RESUME' : currentTextIndex}
         </button>
-      </div> */}
-      <div style={{ position: 'fixed', top: 100, left: 50, zIndex: 999 }}>
+      </div>
+      {/* <div style={{ position: 'fixed', top: 100, left: 50, zIndex: 999 }}>
         <p style={{ fontSize: '45px', margin: '20px', padding: '8px' }}>
             {showEquation1? <span>3(1<sup>2</sup> + 2<sup>2</sup> + 3<sup>2</sup> + ... + n<sup>2</sup>)</span> : <></>}{showEquation? <span>= n(n + 1)(n + 1 / 2)</span> : <></>
             }
         </p>
-          </div>
+          </div> */}
           <div style={{ position: 'fixed', top: 100, left: '45%', zIndex: 999 }}>
-              { !showEquation1? <p>Explation Text</p>:<></>}
+              {!showEquation1 ? <p>{currentTextIndex}</p>:<></>}
           </div>
           
       {/* <div style={{position:'fixed',bottom:"0",left:"40%"}}> */}
@@ -424,12 +457,12 @@ export default function AppNew() {
       </button> */}
           {/* </div> */}
     <div className='flex h-full' >
-        <Canvas className='basis-2/3' camera={{ fov: 80, position: [0, 20, 7],  }}>
+        <Canvas className='basis-1/2' camera={{ fov: 40, position: [10, 10, 20],  }}>
             <Scene isPaused={isPaused} togglePaused={togglePaused}/>
         </Canvas>
-        <div className="basis-1/3">
-            <div style={{ position: 'fixed', top: 200, right: 30, zIndex: 999 }}>
-                <p style={{ fontSize: '35px', margin: '20px', padding: '8px', textAlign: 'right' }}>
+        <div className="basis-1/2">
+            <div style={{ position: 'fixed', top: '30%', right: 30, zIndex: 999 }}>
+                <p style={{ fontSize: '35px', margin: '20px', marginLeft: '10px',padding: '8px', textAlign: 'right', width:'100%' }}>
                         {/* {displayText} */}
                         {textDisplay}
                 </p>
