@@ -216,7 +216,7 @@ export default function App() {
   }
 
   useEffect(() => {
-    if (movedCubes === 10) {
+    if (movedCubes >= 9) {
       setScene(6);
     }
   }, [movedCubes])
@@ -233,7 +233,7 @@ export default function App() {
           onClick={() => togglePaused((value) => !value)}
           style={{ fontSize: '20px', margin: '20px', padding: '8px' }}
         >
-          {isPaused ? 'RESUME' : 'PAUSE'}
+          {/* {isPaused ? 'RESUME' : movedCubes} */}
         </button>
       </div>
 
