@@ -13,7 +13,7 @@ import {
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />,
+    element:<LandingPage /> ,
   },
   {
     path: "/three-pyramid",
@@ -24,8 +24,8 @@ const router = createBrowserRouter([
     element: <AppNew />,
   },
   {
-    path: "/landing-page",
-    element: <LandingPage />
+    path: "/app",
+    element: <App />
   }
 ]);
 

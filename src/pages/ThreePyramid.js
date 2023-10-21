@@ -7,6 +7,7 @@ import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry'
 import * as THREE from 'three'
 import { FontLoader } from 'three/examples/jsm/loaders/FontLoader'
 import almendra from '../fonts/Almendra_Regular.json'
+import { useNavigate } from "react-router-dom";
 
 extend({ TextGeometry })
 
@@ -232,17 +233,14 @@ function Scene({ isPaused, color }) {
 const ThreePyramid = () => {
 
     const [isPaused, togglePaused] = useState(false)
+    const navigate = useNavigate()
 
     return (
         <div style={{ height: '100vh', width: '100%' }}>
-            <div style={{ position: 'fixed', textAlign: 'center', width: '100%', zIndex: +1 }}>
+            <div className="text-6xl font-thin mt-20" style={{ position: 'fixed', textAlign: 'center', width: '100%', zIndex: +1 }}>
                 {/* Hello */}
-            </div>
-            <div style={{ position: 'fixed', top: 100, left: "15%", zIndex: 999 }}>
-                    <p style={{ fontSize: '35px', margin: '20px', padding: '8px', textAlign: 'right' }}>
                         <span>3(1<sup>2</sup> + 2<sup>2</sup> + 3<sup>2</sup> + ... + n<sup>2</sup>)</span>
-                    </p>
-                </div>
+            </div>
 
             <div className='flex h-full' >
                 <Canvas camera={{ fov: 50, position: [2, 10, 17] }}>
@@ -254,11 +252,43 @@ const ThreePyramid = () => {
                 <Canvas camera={{ fov: 50, position: [2, 10, 17] }}>
                     <Scene isPaused={isPaused} color={"yellow"} />
                 </Canvas>
-                <div style={{ position: 'fixed', bottom: 100, right: "25%", zIndex: 999 }}>
-                    <p style={{ fontSize: '35px', margin: '20px', padding: '8px', textAlign: 'right' }}>
-                        Let's make 2 more copies of the same shape
+                <div style={{ position: 'fixed', bottom: 150, left:"50%",transform: "translateX(-50%)", zIndex: 999, textAlign:"center", width:"70%" }}>
+                    <p className='text-5xl font-thin'>
+                        Now Let's Connect These Three Shapes
                     </p>
                 </div>
+
+                <div style={{ position: 'fixed', top: 40, left: 40, zIndex: 999 }} >
+                <button style={{
+                    padding: '8px 16px',
+                    border: '2px solid #000',
+                    borderRadius: '4px',
+                    background: 'none',
+                    cursor: 'pointer',
+                    fontSize: '16px',
+                }} onClick={()=>{navigate("/")}}>Restart</button>
+                </div> 
+
+                <div style={{ position: 'fixed', bottom: 50, right: 50, zIndex: 999 }} >
+                <button style={{
+                    padding: '8px 16px',
+                    border: '2px solid #000',
+                    borderRadius: '4px',
+                    background: 'none',
+                    cursor: 'pointer',
+                    fontSize: '16px',
+                }} onClick={navigate("/")} >Next -&gt;</button>
+                </div>  
+            <div style={{ position: 'fixed', bottom: 50, right: 200, zIndex: 999 }} >
+                <button style={{
+                    padding: '8px 16px',
+                    border: '2px solid #000',
+                    borderRadius: '4px',
+                    background: 'none',
+                    cursor: 'pointer',
+                    fontSize: '16px',
+                }} >&lt;- Prev</button>
+                </div> 
             </div>
         </div>
     )
