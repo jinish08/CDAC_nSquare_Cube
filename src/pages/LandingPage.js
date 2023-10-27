@@ -385,13 +385,11 @@ function Scene6({ isPaused, color }) {
     )
 }
 
-
-
-
 const LandingPage = () => {
     const [isPaused, togglePaused] = useState(false)
     const [scene, setScene] = useState(1)
     const navigate = useNavigate();
+    const [showModal, setShowModal] = useState(false);
 
     const handleButtonClick = () => {
         setScene(scene + 1)
@@ -401,55 +399,82 @@ const LandingPage = () => {
         setScene(scene - 1)
     }
 
+    // Reference to the modal's outer div element
+    const divRef = useRef(null);
+
+    const closeModal = () => {
+        setShowModal(false);
+    };
+    const handleClickOutside = (e) => {
+        if (divRef.current && !divRef.current.contains(e.target)) {
+            console.log("Clicked outside");
+        setShowModal(false);
+        }
+    };
+
+    const toggleShowModel = () => {
+        setShowModal(!showModal);
+    };
+
+    // Adding and removing event listener when the component mounts and unmounts
+    // useEffect(() => {
+    //     document.addEventListener("click", handleClickOutside);
+
+    //     return () => {
+    //     document.removeEventListener("click", handleClickOutside);
+    //     };
+    // }, []);
+
     useEffect(()=>{
-        if(scene===5){
+        if(scene===7){
             navigate('/app')
         }
     },[scene])
 
     return (
         <div style={{ height: '100vh', width: '100%' }}>
+            {/* <div className="text-6xl font-thin mt-12" style={{ position: 'fixed', textAlign: 'center', width: '100%', zIndex: +1 }}>
+                {scene == 1 && ("We will represent each term in the series with the equivalent number of cubes")}
+
+            </div> */}
             <div className="text-6xl font-thin mt-12" style={{ position: 'fixed', textAlign: 'center', width: '100%', zIndex: +1 }}>
-                {scene == 1 && "We will represent each term in the series with the equivalent number of cubes"}
-
-            </div>
-            <div style={{ position: 'fixed', bottom: "0", left: "40%" }}>
+                <p>Sum of Squares of N Natural Numbers</p>
             </div>
 
-            <div className='flex h-[90%] text-3xl scroll-m-6' >
-                {scene === 1 && (<><div className='basis-1/12'>
+            <div className='flex h-[80%] text-3xl scroll-m-6' >
+                {(scene === 1 || scene === 2 || scene === 3) && (<><div className='basis-1/12'>
                     <Canvas camera={{ fov: 45, position: [0.2, 6.2, 10] }}>
                         <Scene1 isPaused={isPaused} color={"hotpink"} />
                     </Canvas>
-                    <p className='-mt-52 ml-32'>1^2</p>
+                    <p className='-mt-52 ml-32'>1<sup>2</sup></p>
                     <p className='-mt-10 ml-64'>+</p>
                 </div>
                     <div className='basis-1/4'>
                         <Canvas camera={{ fov: 45, position: [0.2, 6.2, 10.2] }}>
                             <Scene2 isPaused={isPaused} color={"red"} />
                         </Canvas>
-                        <p className='-mt-52 ml-32'>2^2</p>
+                        <p className='-mt-52 ml-32'>2<sup>2</sup></p>
                         <p className='-mt-10 ml-64'>+</p>
                     </div>
                     <div className='basis-1/4'>
                         <Canvas camera={{ fov: 45, position: [0.2, 6.2, 10.2] }}>
                             <Scene3 isPaused={isPaused} color={"yellow"} />
                         </Canvas>
-                        <p className='-mt-52 ml-36'>3^2</p>
+                        <p className='-mt-52 ml-36'>3<sup>2</sup></p>
                         <p className='-mt-10 ml-80'>+....+</p>
                     </div>
                     <div className='basis-5/12'>
                         <Canvas className='basis-5/12' camera={{ fov: 45, position: [0.2, 6.2, 10.2] }}>
                             <Scene4 isPaused={isPaused} color={"green"} />
                         </Canvas>
-                        <p className='-mt-52 ml-56'>n^2</p>
+                        <p className='-mt-52 ml-56'>n<sup>2</sup></p>
                     </div></>)}
-                {(scene === 2 || scene === 3) && (
+                {(scene === 4 || scene === 5) && (
                     <Canvas camera={{ fov: 35, position: [10, 10, 17] }}>
                         <Scene5 isPaused={isPaused} color={["hotpink", "red", "yellow", "green"]} />
                     </Canvas>
                 )}
-                {scene === 4 && (
+                {scene === 6 && (
                     <>
                         <Canvas camera={{ fov: 40, position: [10, 10, 17] }}>
                             <Scene6 isPaused={isPaused} color={"hotpink"} />
@@ -462,12 +487,15 @@ const LandingPage = () => {
                         </Canvas>
                     </>
                 )}
-                {(scene === 2 || scene === 3 || scene === 4) &&
-                    (<div style={{ position: 'fixed', bottom: 150, zIndex: 999, left: "50%", transform: "translateX(-50%)", width: "70%" }}>
-                        <p className='text-center text-5xl font-thin'>
-                            {scene == 2 && "We can see that the length, width, and heigth, of this shape, is equal to n"}
-                            {scene == 3 && "Let's make 2 more copies of the same shape"}
-                            {scene == 4 && "Now Let's Connect These Three Shapes"}
+                {(scene===1 ||scene === 2 || scene === 3 || scene === 4 || scene===5 || scene===6) &&
+                    (<div className=" w-6/12 bg-gray-300/80 rounded-xl backdrop-blur-md" style={{ position: 'fixed', bottom: 150, zIndex: 999, left: "50%", transform: "translateX(-50%)", width: "70%" }}>
+                        <p className='text-center m-1 text-5xl font-thin'>
+                        {scene === 1 && "Let's learn about the formula of sum of squares of n natural numbers using 3D Cubes"}
+                        {scene === 2 && "We will represent each term in the series with the equivalent number of cubes"}
+                        {scene === 3 &&"Now, Let's pile up these cubes"}
+                            {scene === 4 && "We can see that the length, width, and heigth, of this shape, is equal to n"}
+                            {scene === 5 && "Let's make 2 more copies of the same shape"}
+                            {scene === 6 && "Now Let's Connect These Three Shapes"}
                         </p>
                     </div>)
                 }
@@ -483,7 +511,7 @@ const LandingPage = () => {
                     fontSize: '16px',
                 }} onClick={handleButtonClick}>Next -&gt;</button>
             </div>
-            <div style={{ position: 'fixed', bottom: 50, right: 200, zIndex: 999 }} >
+            {scene!==1 && (<div style={{ position: 'fixed', bottom: 50, right: 200, zIndex: 999 }} >
                 <button style={{
                     padding: '8px 16px',
                     border: '2px solid #000',
@@ -492,7 +520,35 @@ const LandingPage = () => {
                     cursor: 'pointer',
                     fontSize: '16px',
                 }} onClick={handlePrevButtonClick}>&lt;- Prev</button>
+            </div>)}
+            <div style={{ position: 'fixed', bottom: -20, left: '5%'}}>
+                <img style={{width:'42%'}} src={'./images/character.png'} alt='character'/>
             </div>
+            <div style={{ position: 'fixed', bottom: 20, left: 10, zIndex: 999 }}>
+                <button style={{
+                padding: '8px 16px',
+                border: '2px solid #000',
+                borderRadius: '20px',
+                background: 'none',
+                cursor: 'pointer',
+                fontSize: '16px',
+            }}
+            onClick={toggleShowModel}>i</button>
+            </div>
+            {showModal && (
+                    <div
+                    ref={divRef}
+                            className="fixed w-6/12 bg-gray-300/80 rounded-xl backdrop-blur-md"
+                            style={{ zIndex: 999 , left: "48px", bottom: "50px"}}
+                    >
+                    <div className="flex flex-col m-2">
+                        <p className="text-xl">
+                                You can rotate the objects in 3D by clicking and dragging on the screen,<br/>
+                                You can zoom in and out using the mouse wheel or pinch gesture.
+                        </p>
+                    </div>
+                    </div>
+                )}
         </div>
     )
 }

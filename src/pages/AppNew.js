@@ -334,8 +334,8 @@ export default function AppNew() {
   const [isPaused, togglePaused] = useState(false);
   const navigate = useNavigate();
   const textList = [
-    <p>Volume of a cuboid = Length x Width x Height</p>,
-    <p>And as illustrated, the volume of this cuboid =<br />3(1<sup>2</sup> + 2<sup>2</sup> + 3<sup>2</sup> + ... + n<sup>2</sup>)</p>,
+    <p>Volume of a cuboid = Length x Width x Height - (I)</p>,
+    <p>And as illustrated, the volume of this cuboid =<br />3(1<sup>2</sup> + 2<sup>2</sup> + 3<sup>2</sup> + ... + n<sup>2</sup>) - (II)</p>,
     <p>Given Height = (n + (1/2))</p>,
     <p>Simplifying,</p>,
     <p>Height = (2n+1)/2</p>,
@@ -349,33 +349,25 @@ export default function AppNew() {
   const [displayText, setDisplayText] = useState(textList[0]);
   const [textDisplay, setTextDisplay] = useState([
     <p>Dimensions: </p>,
-    <p> length = n, width = n + 1, height = n + 1/2 </p>,
+    <p> length = n <br/> width = n + 1 <br/> height = n + 1/2 </p>,
 
   ]);
   const [showEquation, setShowEquation] = useState(false);
   const [showEquation1, setShowEquation1] = useState(true);
 
   const handleButtonClick = () => {
-    // The new text should add to the next line
-    // setDisplayText(displayText + "<br/>" + textList[nextIndex]);
-    // if (currentTextIndex === 0 && !showEquation) {
-    //     setTextDisplay([]);
-    //     setShowEquation(true);
-    //     setCurrentTextIndex(1);
-    //     return;
-    // }
+
     const nextIndex = (currentTextIndex + 1);
-    if (nextIndex !== 10) {
+    setScene(scene+1);
+    if (nextIndex !== 11) {
       if (nextIndex === 1) {
         textDisplay.pop();
         textDisplay.pop();
         textDisplay.pop();
         textDisplay.pop();
       }
-      // setShowEquation(false);
-      // setShowEquation1(false);
-      if (nextIndex === 6) {
-        // Clear the textDisplay.
+
+    if (nextIndex === 6) {
         setTextDisplay([]);
         for (var i = 0; i < nextIndex + 1; i++) {
           textDisplay.pop();
@@ -390,9 +382,9 @@ export default function AppNew() {
       setCurrentTextIndex(nextIndex);
     }
   };
+    
   const handlePrevButtonClick = () => {
-    // The new text should add to the next line
-    // setDisplayText(displayText + "<br/>" + textList[nextIndex]);
+    setScene(scene-1);
     if (currentTextIndex === 0) {
       return;
     }
@@ -402,7 +394,7 @@ export default function AppNew() {
       // setShowEquation1(true);
       setTextDisplay([
         <p>Dimensions: </p>,
-        <p> length = n, width = n + 1, height = n + 1/2 </p>,
+        <p> length = n <br/> width = n + 1 <br/> height = n + 1/2 </p>
       ]);
       setCurrentTextIndex(nextIndex);
       return;
@@ -430,33 +422,21 @@ export default function AppNew() {
     setCurrentTextIndex(nextIndex);
   };
 
+    const [showModal, setShowModal] = useState(false);
+    const divRef = useRef(null);
+    const [scene, setScene] = useState(1);
+    
+    const toggleShowModel = () => {
+        setShowModal(!showModal);
+    };
+
   return (
     <div style={{ height: '100vh', width: '100%' }}>
-      <div style={{ position: 'fixed', textAlign: 'center', width: '100%', zIndex: +1 }}>
-        <button
-          onClick={() => togglePaused((value) => !value)}
-          style={{ fontSize: '20px', margin: '20px', padding: '8px' }}
-        >
-          {/* {isPaused ? 'RESUME' : currentTextIndex} */}
-        </button>
-      </div>
-      {/* <div style={{ position: 'fixed', top: 100, left: 50, zIndex: 999 }}>
-        <p style={{ fontSize: '45px', margin: '20px', padding: '8px' }}>
-            {showEquation1? <span>3(1<sup>2</sup> + 2<sup>2</sup> + 3<sup>2</sup> + ... + n<sup>2</sup>)</span> : <></>}{showEquation? <span>= n(n + 1)(n + 1 / 2)</span> : <></>
-            }
-        </p>
-          </div> */}
-      <div style={{ position: 'fixed', top: 100, left: '45%', zIndex: 999 }}>
-        {!showEquation1 ? <p>{currentTextIndex}</p> : <></>}
-      </div>
+      
+        {currentTextIndex !== 10 && (<div className="text-6xl font-thin mt-12" style={{ position: 'fixed', top: -40, textAlign: 'center', width: '100%', zIndex: +1 }}>
+            <p>Sum of Squares of N Natural Numbers</p>
+        </div>)}
 
-      {/* <div style={{position:'fixed',bottom:"0",left:"40%"}}> */}
-      {/* <button
-          style={{ fontSize: '20px', margin: '20px', padding: '8px' }}
-      >
-        Click on the Blue Boxes to move them
-      </button> */}
-      {/* </div> */}
       <div className='flex h-full' >
         <div className='basis-5/12 pl-7'>
           <Canvas camera={{ fov: 37, position: [10, 8, 20], }}>
@@ -469,9 +449,25 @@ export default function AppNew() {
               {/* {displayText} */}
               {textDisplay}
             </p>
-          </div>
+        </div>
+                  
+        {currentTextIndex == 10 && <div style={{ position: 'fixed', top: 50, zIndex: 999, left: "50%", transform: "translateX(-50%)", width: "70%", backgroundColor: "#D3D3D3", padding: "20px", borderRadius: "10px" }}>
+            <p className='text-center text-5xl font-semibold'>
+                This is the formula for sum of N square
+            </p>
+        </div>}
+          
+        {(scene === 1 || scene === 2 || scene === 3 || scene === 7 || scene === 8 ) &&(<div className=" w-6/12 bg-gray-300/80 rounded-xl backdrop-blur-md" style={{ position: 'fixed', bottom: 150, zIndex: 999, left: "50%", transform: "translateX(-50%)", width: "70%" }}>
+            <p className='text-center m-1 text-5xl font-thin'>
+            {scene === 1 && "Therefore, the dimensions of this cuboid are"}
+            {scene === 2 && "We all know the formula for the volume of cuboid"}
+            {scene === 3 && <p>Since it is a combination of 3 figures each of volume (1<sup>2</sup> + 2<sup>2</sup> + 3<sup>2</sup> + ... + n<sup>2</sup>)</p>}
+            {scene === 7 && "Equating equations (I) and (II), we get"}
+            {scene === 8 && "using the figures dimensional values of length, width and height"}
+            </p>
+        </div>)}
 
-          {currentTextIndex == 9 && <div style={{ position: 'fixed', bottom: 150, zIndex: 999, left: "50%", transform: "translateX(-50%)", width: "70%", backgroundColor: "#D3D3D3", padding: "20px", borderRadius: "10px" }}>
+          {currentTextIndex >= 9 && <div style={{ position: 'fixed', bottom: 150, zIndex: 999, left: "50%", transform: "translateX(-50%)", width: "70%", backgroundColor: "#D3D3D3", padding: "20px", borderRadius: "10px" }}>
             <p className='text-center text-5xl font-semibold'>
               1<sup>2</sup> + 2<sup>2</sup> + 3<sup>2</sup> + ... + n<sup>2</sup> = [n(n + 1)(2n + 1)]/6
             </p>
@@ -486,9 +482,39 @@ export default function AppNew() {
               cursor: 'pointer',
               fontSize: '16px',
             }} onClick={() => { navigate("/app") }}>Return</button>
-          </div>
+                  </div>
+                  
+            <div style={{ position: 'fixed', bottom: -30, left: '5%'}}>
+                <img style={{width:'42%'}} src={'./images/character.png'} alt='character'/>
+            </div>
 
-          {currentTextIndex != 9 && <div style={{ position: 'fixed', bottom: 50, right: 50, zIndex: 999 }} >
+            <div style={{ position: 'fixed', bottom: 20, left: 10, zIndex: 999 }}>
+                <button style={{
+                padding: '8px 16px',
+                border: '2px solid #000',
+                borderRadius: '20px',
+                background: 'none',
+                cursor: 'pointer',
+                fontSize: '16px',
+                }}
+                onClick={toggleShowModel}>i</button>
+            </div>
+            {showModal && (
+                <div
+                ref={divRef}
+                        className="fixed w-6/12 bg-gray-300/80 rounded-xl backdrop-blur-md"
+                        style={{ zIndex: 999 , left: "48px", bottom: "50px"}}
+                >
+                <div className="flex flex-col m-2">
+                    <p className="text-xl">
+                            You can rotate the objects in 3D by clicking and dragging on the screen,<br/>
+                            You can zoom in and out using the mouse wheel or pinch gesture.
+                    </p>
+                </div>
+                </div>
+            )}
+
+          {currentTextIndex != 10 && <div style={{ position: 'fixed', bottom: 50, right: 50, zIndex: 999 }} >
             <button style={{
               padding: '8px 16px',
               border: '2px solid #000',
