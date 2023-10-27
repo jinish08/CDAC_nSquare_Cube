@@ -365,7 +365,7 @@ export default function AppNew() {
     //     return;
     // }
     const nextIndex = (currentTextIndex + 1);
-    if (nextIndex !== 10) {
+    if (nextIndex !== 11) {
       if (nextIndex === 1) {
         textDisplay.pop();
         textDisplay.pop();
@@ -471,9 +471,15 @@ export default function AppNew() {
             </p>
           </div>
 
-          {currentTextIndex == 9 && <div style={{ position: 'fixed', bottom: 150, zIndex: 999, left: "50%", transform: "translateX(-50%)", width: "70%", backgroundColor: "#D3D3D3", padding: "20px", borderRadius: "10px" }}>
+          {currentTextIndex >= 9 && <div style={{ position: 'fixed', bottom: 150, zIndex: 999, left: "50%", transform: "translateX(-50%)", width: "70%", backgroundColor: "#D3D3D3", padding: "20px", borderRadius: "10px" }}>
             <p className='text-center text-5xl font-semibold'>
               1<sup>2</sup> + 2<sup>2</sup> + 3<sup>2</sup> + ... + n<sup>2</sup> = [n(n + 1)(2n + 1)]/6
+            </p>
+          </div>}
+
+          {currentTextIndex == 10 && <div style={{ position: 'fixed', top: 50, zIndex: 999, left: "50%", transform: "translateX(-50%)", width: "70%", backgroundColor: "#D3D3D3", padding: "20px", borderRadius: "10px" }}>
+            <p className='text-center text-5xl font-semibold'>
+              This is the formula for sum of N square
             </p>
           </div>}
 
@@ -488,7 +494,7 @@ export default function AppNew() {
             }} onClick={() => { navigate("/app") }}>Return</button>
           </div>
 
-          {currentTextIndex != 9 && <div style={{ position: 'fixed', bottom: 50, right: 50, zIndex: 999 }} >
+          {currentTextIndex != 10 && <div style={{ position: 'fixed', bottom: 50, right: 50, zIndex: 999 }} >
             <button style={{
               padding: '8px 16px',
               border: '2px solid #000',
