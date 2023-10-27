@@ -205,18 +205,32 @@ export default function App() {
   const [isPaused, togglePaused] = useState(false)
   const [scene, setScene] = useState(1)
   const [movedCubes, setMovedCubes] = useState(0);
-  const navigate = useNavigate();
+    const navigate = useNavigate();
+    const [showModal, setShowModal] = useState(false);
+    const divRef = useRef(null);
 
-  const handleButtonClick = () => {
-    setScene(scene + 1)
-  }
+    const toggleShowModel = () => {
+        setShowModal(!showModal);
+    };
 
-  const handlePrevButtonClick = () => {
-    setScene(scene - 1)
-  }
+    const handleButtonClick = () => {
+        if (scene === 4) {
+            setScene(6);
+            return;
+        }
+        setScene(scene + 1)
+    }
+
+    const handlePrevButtonClick = () => {
+        if (scene === 6) {
+            setScene(4);
+            return;
+        }
+        setScene(scene - 1)
+    }
 
   useEffect(() => {
-    if (movedCubes >= 9) {
+    if (movedCubes > 9) {
       setScene(6);
     }
   }, [movedCubes])
@@ -228,62 +242,98 @@ export default function App() {
   }, [scene])
   return (
     <div style={{ height: '100vh', width: '100%' }}>
-      <div style={{ position: 'fixed', textAlign: 'center', width: '100%', zIndex: +1 }}>
-        <button
-          onClick={() => togglePaused((value) => !value)}
-          style={{ fontSize: '20px', margin: '20px', padding: '8px' }}
-        >
-          {/* {isPaused ? 'RESUME' : movedCubes} */}
-        </button>
-      </div>
+        <div style={{ position: 'fixed', textAlign: 'center', width: '100%', zIndex: +1 }}>
+            <button
+                onClick={() => togglePaused((value) => !value)}
+                style={{ fontSize: '20px', margin: '20px', padding: '8px' }}
+            >
+            {/* {isPaused ? 'RESUME' : movedCubes} */}
+            </button>
+        </div>
 
-      <Canvas camera={{ fov: 30, position: [4, 15, 25] }}>
-        <Scene isPaused={isPaused} togglePaused={togglePaused} setMovedCubes={setMovedCubes} movedCubes={movedCubes} />
-      </Canvas>
+        <Canvas camera={{ fov: 30, position: [4, 15, 25] }}>
+            <Scene isPaused={isPaused} togglePaused={togglePaused} setMovedCubes={setMovedCubes} movedCubes={movedCubes} />
+        </Canvas>
+            
+        <div className="text-6xl font-thin mt-12" style={{ position: 'fixed',top:0, textAlign: 'center', width: '100%', zIndex: +1 }}>
+            <p>Sum of Squares of N Natural Numbers</p>
+        </div>
 
-      <div style={{ position: 'fixed', bottom: 100, zIndex: 999, left: "50%", transform: "translateX(-50%)", width: "70%" }}>
-        <p className='text-center text-3xl font-thin'>
-          {scene == 1 && "You can rotate the camera by clicking and dragging on the screen"}
-          {scene == 2 && "You can zoom in and out using the mouse wheel or pinch gesture"}
-          {scene == 3 && "Now you are familariased with the 3D space, let's move on to the next part"}
-          {scene == 4 && "Click on the blue cubes to move them to the correct position"}
-          {scene == 6 && "You have successfully completed the activity"}
-          {scene == 7 && "Move and play around with the new figure and try to predict its dimensions"}
-        </p>
-      </div>
+        <div className=" bg-gray-300/80 rounded-xl backdrop-blur-md"
+            style={{ position: 'fixed', bottom: 100, zIndex: 999, left: "50%", transform: "translateX(-50%)", width: "70%" }}>
+            <p className='text-center m-1 text-5xl font-thin'>
+            {scene === 1 && "This is the combined figure in 3D, which you can rotate and zoom in and out"}
+            {scene === 2 && "Now you are familariased with the 3D space, let's move on to the next part"}
+            {scene === 3 && "Now, lets try to make a complete cuboid of this figure by moving the extra cubes above (blue) and flatten the top layer"}
+            {scene === 4 && "Click on the blue cubes to move them to the correct position"}
+            {scene === 6 && "You have successfully completed the activity"}
+            {scene === 7 && "Move and play around with the new figure and try to predict its dimensions"}
+            </p>
+        </div>
+    
+        <div style={{ position: 'fixed', bottom: -30, left: '5%' }}>
+            <img style={{width:'42%'}} src={'./images/character.png'} alt='character'/>
+        </div>
 
-      <div style={{ position: 'fixed', top: 40, left: 40, zIndex: 999 }} >
+        <div style={{ position: 'fixed', bottom: 20, left: 10, zIndex: 999 }}>
+            <button style={{
+                padding: '8px 16px',
+                border: '2px solid #000',
+                borderRadius: '20px',
+                background: 'none',
+                cursor: 'pointer',
+                fontSize: '16px',
+                }}
+                onClick={toggleShowModel}>i</button>
+        </div>
+    
+        {showModal && (
+            <div
+            ref={divRef}
+                    className="fixed w-6/12 bg-gray-300/80 rounded-xl backdrop-blur-md"
+                    style={{ zIndex: 999 , left: "48px", bottom: "50px"}}
+            >
+            <div className="flex flex-col m-2">
+                <p className="text-xl">
+                    You can rotate the objects in 3D by clicking and dragging on the screen,<br/>
+                    You can zoom in and out using the mouse wheel or pinch gesture.
+                </p>
+            </div>
+            </div>
+        )}
+    
+        <div style={{ position: 'fixed', top: 40, left: 40, zIndex: 999 }} >
+            <button style={{
+                padding: '8px 16px',
+                border: '2px solid #000',
+                borderRadius: '4px',
+                background: 'none',
+                cursor: 'pointer',
+                fontSize: '16px',
+            }} onClick={() => { navigate("/") }}>Home</button>
+        </div>
+
+        {(scene !== 4 || movedCubes > 9) && <div style={{ position: 'fixed', bottom: 50, right: 50, zIndex: 999 }} >
         <button style={{
-          padding: '8px 16px',
-          border: '2px solid #000',
-          borderRadius: '4px',
-          background: 'none',
-          cursor: 'pointer',
-          fontSize: '16px',
-        }} onClick={() => { navigate("/") }}>Home</button>
-      </div>
-
-
-      {scene != 4 && <div style={{ position: 'fixed', bottom: 50, right: 50, zIndex: 999 }} >
-        <button style={{
-          padding: '8px 16px',
-          border: '2px solid #000',
-          borderRadius: '4px',
-          background: 'none',
-          cursor: 'pointer',
-          fontSize: '16px',
+            padding: '8px 16px',
+            border: '2px solid #000',
+            borderRadius: '4px',
+            background: 'none',
+            cursor: 'pointer',
+            fontSize: '16px',
         }} onClick={handleButtonClick}>Next -&gt;</button>
-      </div>}
-      {scene != 1 && <div style={{ position: 'fixed', bottom: 50, right: 200, zIndex: 999 }} >
-        <button style={{
-          padding: '8px 16px',
-          border: '2px solid #000',
-          borderRadius: '4px',
-          background: 'none',
-          cursor: 'pointer',
-          fontSize: '16px',
-        }} onClick={handlePrevButtonClick}>&lt;- Prev</button>
-      </div>}
+        </div>}
+
+        {scene != 1 && <div style={{ position: 'fixed', bottom: 50, right: 200, zIndex: 999 }} >
+            <button style={{
+                padding: '8px 16px',
+                border: '2px solid #000',
+                borderRadius: '4px',
+                background: 'none',
+                cursor: 'pointer',
+                fontSize: '16px',
+            }} onClick={handlePrevButtonClick}>&lt;- Prev</button>
+        </div>}
     </div>
-  )
+    )
 }
