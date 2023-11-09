@@ -444,7 +444,7 @@ export default function AppNew() {
           </Canvas>
         </div>
         <div >
-          <div style={{ position: 'fixed', top: '30%', zIndex: 999, width: '60%', paddingRight: "20px" }}>
+          <div style={{ position: 'fixed', top: '27%', zIndex: 999, width: '60%', paddingRight: "20px" }}>
             <p className='text-4xl font-thin' style={{ margin: '20px', marginLeft: '10px', padding: '8px', textAlign: 'right' }}>
               {/* {displayText} */}
               {textDisplay}
@@ -452,7 +452,7 @@ export default function AppNew() {
         </div>
                   
         {currentTextIndex == 10 && <div style={{ position: 'fixed', top: 50, zIndex: 999, left: "50%", transform: "translateX(-50%)", width: "70%", backgroundColor: "#D3D3D3", padding: "20px", borderRadius: "10px" }}>
-            <p className='text-center text-5xl font-semibold'>
+            <p className='text-center text-4xl font-semibold'>
                 This is the formula for sum of N square
             </p>
         </div>}
@@ -468,14 +468,8 @@ export default function AppNew() {
         </div>)}
 
           {currentTextIndex >= 9 && <div style={{ position: 'fixed', bottom: 150, zIndex: 999, left: "50%", transform: "translateX(-50%)", width: "70%", backgroundColor: "#D3D3D3", padding: "20px", borderRadius: "10px" }}>
-            <p className='text-center text-5xl font-semibold'>
+            <p className='text-center text-4xl font-semibold'>
               1<sup>2</sup> + 2<sup>2</sup> + 3<sup>2</sup> + ... + n<sup>2</sup> = [n(n + 1)(2n + 1)]/6
-            </p>
-          </div>}
-
-          {currentTextIndex == 10 && <div style={{ position: 'fixed', top: 50, zIndex: 999, left: "50%", transform: "translateX(-50%)", width: "70%", backgroundColor: "#D3D3D3", padding: "20px", borderRadius: "10px" }}>
-            <p className='text-center text-5xl font-semibold'>
-              This is the formula for sum of N square
             </p>
           </div>}
 
