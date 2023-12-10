@@ -384,10 +384,11 @@ export default function AppNew() {
   };
     
   const handlePrevButtonClick = () => {
-    setScene(scene-1);
     if (currentTextIndex === 0) {
-      return;
+        navigate("/app",{state:{scene:4}});
+        return;
     }
+    setScene(scene-1);
     const nextIndex = (currentTextIndex - 1);
     if (nextIndex === 0) {
       // setShowEquation(false);
@@ -472,17 +473,6 @@ export default function AppNew() {
               1<sup>2</sup> + 2<sup>2</sup> + 3<sup>2</sup> + ... + n<sup>2</sup> = [n(n + 1)(2n + 1)]/6
             </p>
           </div>}
-
-          <div style={{ position: 'fixed', top: 40, left: 40, zIndex: 999 }} >
-            <button style={{
-              padding: '8px 16px',
-              border: '2px solid #000',
-              borderRadius: '4px',
-              background: 'none',
-              cursor: 'pointer',
-              fontSize: '16px',
-            }} onClick={() => { navigate("/app") }}>Return</button>
-                  </div>
                   
             <div style={{ position: 'fixed', bottom: -30, left: '5%'}}>
                 <img style={{width:'42%'}} src={'./images/character.png'} alt='character'/>
@@ -525,7 +515,7 @@ export default function AppNew() {
             }} onClick={handleButtonClick}>Next -&gt;</button>
           </div>
           }
-          {currentTextIndex != 0 && <div style={{ position: 'fixed', bottom: 50, right: 200, zIndex: 999 }} >
+          <div style={{ position: 'fixed', bottom: 50, right: 200, zIndex: 999 }} >
             <button style={{
               padding: '8px 16px',
               border: '2px solid #000',
@@ -534,7 +524,7 @@ export default function AppNew() {
               cursor: 'pointer',
               fontSize: '16px',
             }} onClick={handlePrevButtonClick}>&lt;- Prev</button>
-          </div>}
+          </div>
         </div>
       </div>
     </div>

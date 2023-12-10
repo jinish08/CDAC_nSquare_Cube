@@ -5,6 +5,7 @@ import App from './App';
 import ThreePyramid from './pages/ThreePyramid';
 import AppNew from './pages/AppNew';
 import LandingPage from "./pages/LandingPage"
+import OpeningPage from "./pages/OpeningPage"
 import {
   createBrowserRouter,
   RouterProvider,
@@ -12,7 +13,7 @@ import {
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: "/landing-page",
     element:<LandingPage /> ,
   },
   {
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
   {
     path: "/app",
     element: <App />
+    },
+    {
+        path: "/",
+        element: <OpeningPage />
   }
 ]);
 

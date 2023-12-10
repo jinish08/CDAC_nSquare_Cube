@@ -7,7 +7,7 @@ import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry'
 import * as THREE from 'three'
 import { FontLoader } from 'three/examples/jsm/loaders/FontLoader'
 import almendra from '../fonts/Almendra_Regular.json'
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 extend({ TextGeometry })
 
@@ -387,7 +387,9 @@ function Scene6({ isPaused, color }) {
 
 const LandingPage = () => {
     const [isPaused, togglePaused] = useState(false)
-    const [scene, setScene] = useState(1)
+    const location = useLocation();
+    const [scene, setScene] = useState(location.state?.scene || 1);
+
     const navigate = useNavigate();
     const [showModal, setShowModal] = useState(false);
 
@@ -396,10 +398,12 @@ const LandingPage = () => {
     }
 
     const handlePrevButtonClick = () => {
+        if (scene === 1) {
+            navigate('/');
+        }
         setScene(scene - 1)
     }
 
-    // Reference to the modal's outer div element
     const divRef = useRef(null);
 
     const closeModal = () => {
@@ -416,27 +420,15 @@ const LandingPage = () => {
         setShowModal(!showModal);
     };
 
-    // Adding and removing event listener when the component mounts and unmounts
-    // useEffect(() => {
-    //     document.addEventListener("click", handleClickOutside);
-
-    //     return () => {
-    //     document.removeEventListener("click", handleClickOutside);
-    //     };
-    // }, []);
-
-    useEffect(()=>{
+    useEffect(() => {
         if(scene===7){
-            navigate('/app')
+            navigate('/app',{state:{scene:1}})
         }
     },[scene])
 
     return (
         <div style={{ height: '100vh', width: '100%' }}>
-            {/* <div className="text-6xl font-thin mt-12" style={{ position: 'fixed', textAlign: 'center', width: '100%', zIndex: +1 }}>
-                {scene == 1 && ("We will represent each term in the series with the equivalent number of cubes")}
-
-            </div> */}
+            
             <div className="text-6xl font-thin mt-12" style={{ position: 'fixed', textAlign: 'center', width: '100%', zIndex: +1 }}>
                 <p>Sum of Squares of N Natural Numbers</p>
             </div>
@@ -511,7 +503,7 @@ const LandingPage = () => {
                     fontSize: '16px',
                 }} onClick={handleButtonClick}>Next -&gt;</button>
             </div>
-            {scene!==1 && (<div style={{ position: 'fixed', bottom: 50, right: 200, zIndex: 999 }} >
+            <div style={{ position: 'fixed', bottom: 50, right: 200, zIndex: 999 }} >
                 <button style={{
                     padding: '8px 16px',
                     border: '2px solid #000',
@@ -520,7 +512,7 @@ const LandingPage = () => {
                     cursor: 'pointer',
                     fontSize: '16px',
                 }} onClick={handlePrevButtonClick}>&lt;- Prev</button>
-            </div>)}
+            </div>
             <div style={{ position: 'fixed', bottom: -20, left: '5%'}}>
                 <img style={{width:'42%'}} src={'./images/character.png'} alt='character'/>
             </div>

@@ -3,7 +3,7 @@ import { Box, OrbitControls, Plane } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
 import { useRef, useState, useEffect } from 'react'
 import { Mesh } from 'three'
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 
 function Ground({ color, ...props }) {
@@ -203,7 +203,8 @@ function Scene({ isPaused = false, togglePaused, setMovedCubes, movedCubes }) {
 
 export default function App() {
   const [isPaused, togglePaused] = useState(false)
-  const [scene, setScene] = useState(1)
+  const location = useLocation();
+  const [scene, setScene] = useState(location.state?.scene || 1);
   const [movedCubes, setMovedCubes] = useState(0);
     const navigate = useNavigate();
     const [showModal, setShowModal] = useState(false);
@@ -222,6 +223,9 @@ export default function App() {
     }
 
     const handlePrevButtonClick = () => {
+        if (scene === 1) {
+            navigate("/landing-page",{state:{scene:6}});
+        }
         if (scene === 6) {
             setScene(4);
             return;
@@ -302,7 +306,7 @@ export default function App() {
             </div>
         )}
     
-        <div style={{ position: 'fixed', top: 40, left: 40, zIndex: 999 }} >
+        {/* <div style={{ position: 'fixed', top: 40, left: 40, zIndex: 999 }} >
             <button style={{
                 padding: '8px 16px',
                 border: '2px solid #000',
@@ -311,7 +315,7 @@ export default function App() {
                 cursor: 'pointer',
                 fontSize: '16px',
             }} onClick={() => { navigate("/") }}>Home</button>
-        </div>
+        </div> */}
 
         {(scene !== 4 || movedCubes > 9) && <div style={{ position: 'fixed', bottom: 50, right: 50, zIndex: 999 }} >
         <button style={{
@@ -324,7 +328,7 @@ export default function App() {
         }} onClick={handleButtonClick}>Next -&gt;</button>
         </div>}
 
-        {scene != 1 && <div style={{ position: 'fixed', bottom: 50, right: 200, zIndex: 999 }} >
+        <div style={{ position: 'fixed', bottom: 50, right: 200, zIndex: 999 }} >
             <button style={{
                 padding: '8px 16px',
                 border: '2px solid #000',
@@ -333,7 +337,7 @@ export default function App() {
                 cursor: 'pointer',
                 fontSize: '16px',
             }} onClick={handlePrevButtonClick}>&lt;- Prev</button>
-        </div>}
+        </div>
     </div>
     )
 }
